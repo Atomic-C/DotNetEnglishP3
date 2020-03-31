@@ -7,15 +7,17 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
     {
         [BindNever]
         public int Id { get; set; }
-        [Required]
+        //[Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
 
         public string Details { get; set; }
-        [Required]
+        //[Required]
+        //[Range(0, int.MaxValue, ErrorMessage = "Please enter valid  number")]
         public string Stock { get; set; }
-        [Required]
+        //[Required]
+        //[Range(0, double.MaxValue, ErrorMessage = "Please enter valid price")]
         public string Price { get; set; }
     }
 }
