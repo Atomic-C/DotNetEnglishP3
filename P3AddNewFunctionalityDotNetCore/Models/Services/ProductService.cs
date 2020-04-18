@@ -96,37 +96,37 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             List<string> modelErrors = new List<string>();
             if (product.Name == null || string.IsNullOrWhiteSpace(product.Name))
             {
-                modelErrors.Add(_localizer["MissingName"]);
+                modelErrors.Add(_localizer["MissingName"]); //Mocked
             }
 
             if (product.Price == null || string.IsNullOrWhiteSpace(product.Price))
             {
-                modelErrors.Add(_localizer["MissingPrice"]);
+                modelErrors.Add(_localizer["MissingPrice"]); //Mocked
             }
 
             if (!Double.TryParse(product.Price, out double pc))
             {
-                modelErrors.Add(_localizer["PriceNotANumber"]);
+                modelErrors.Add(_localizer["PriceNotANumber"]); //Mocked
             }
             else
             {
                 if (pc <= 0)
-                    modelErrors.Add(_localizer["PriceNotGreaterThanZero"]);
+                    modelErrors.Add(_localizer["PriceNotGreaterThanZero"]); //Mocked
             }
 
             if (product.Stock == null || string.IsNullOrWhiteSpace(product.Stock))
             {
-                modelErrors.Add(_localizer["MissingQuantity"]);
+                modelErrors.Add(_localizer["MissingQuantity"]); //Mocked
             }
 
             if (!int.TryParse(product.Stock, out int qt))
             {
-                modelErrors.Add(_localizer["StockNotAnInteger"]);
+                modelErrors.Add(_localizer["StockNotAnInteger"]); //Mocked
             }
             else
             {
                 if (qt <= 0)
-                    modelErrors.Add(_localizer["StockNotGreaterThanZero"]);
+                    modelErrors.Add(_localizer["StockNotGreaterThanZero"]); //Mocked
             }
 
             return modelErrors;
