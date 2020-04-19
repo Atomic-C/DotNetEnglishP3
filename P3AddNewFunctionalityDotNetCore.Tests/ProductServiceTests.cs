@@ -11,10 +11,24 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 {
     public class ProductServiceTests
     {
+        private Mock<ICart> cartMock;
+        private Mock<IProductRepository> productRepositoryMock;
+        private Mock<IOrderRepository> orderRepositoryMock;
+        private Mock<IStringLocalizer<ProductService>> stringLocalizerMock;
+        private ProductViewModel product;
+
         public ProductServiceTests()
         {
+            // Arrange
+            product = new ProductViewModel();
+            cartMock = new Mock<ICart>();
+            productRepositoryMock = new Mock<IProductRepository>();
+            orderRepositoryMock = new Mock<IOrderRepository>();
+            stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
+
 
         }
+
         
         /// <summary>
         /// Take this test method as a template to write your test method.
@@ -24,21 +38,15 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         [Fact]
         public void ValidateName()
         {
-            // Arrange
-            ProductViewModel product = new ProductViewModel();
-            var cartMock = new Mock<ICart>();
-            var productRepositoryMock = new Mock<IProductRepository>();
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            var stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
-            
+            // Arrange          
             stringLocalizerMock.Setup(l => l["MissingName"]).Returns(new LocalizedString("MissingName", "MissingName"));
-            //read more about lambda expressions
-            //c# expressions read more into it
+
             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
             product.Name = "";
 
             // Act
             List<string> modelErrors = productService.CheckProductModelErrors(product);
+
             // Assert
             Assert.Contains("MissingName", modelErrors); //contains missing name in model errors
         }
@@ -47,18 +55,14 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         public void ValidatePrice()
         {
             //Arrange
-            ProductViewModel product = new ProductViewModel();
-            var cartMock = new Mock<ICart>();
-            var productRepositoryMock = new Mock<IProductRepository>();
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            var stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
-
             stringLocalizerMock.Setup(p => p["MissingPrice"]).Returns(new LocalizedString("MissingPrice", "MissingPrice"));
+
             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
 
             //Act
             List<string> modelErrors = productService.CheckProductModelErrors(product);
+
             //Assert
             Assert.Contains("MissingPrice", modelErrors);
         }
@@ -67,18 +71,13 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         public void ValidatePriceNumber()
         {
             //Arrange
-            ProductViewModel product = new ProductViewModel();
-            var cartMock = new Mock<ICart>();
-            var productRepositoryMock = new Mock<IProductRepository>();
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            var stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
-
-            stringLocalizerMock.Setup(p => p["PriceNotANumber"]).Returns(new LocalizedString("PriceNotANumber", "PriceNotANumber"));
-            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
+             stringLocalizerMock.Setup(p => p["PriceNotANumber"]).Returns(new LocalizedString("PriceNotANumber", "PriceNotANumber"));
+             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
 
             //Act
             List<string> modelErrors = productService.CheckProductModelErrors(product);
+
             //Assert
             Assert.Contains("PriceNotANumber", modelErrors);
         }
@@ -87,16 +86,9 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         public void ValidatePriceGreaterThanZero()
         {
             //Arrange
-            ProductViewModel product = new ProductViewModel();
-            product.Price = "-1"; //setting Price to -1
-
-            var cartMock = new Mock<ICart>();
-            var productRepositoryMock = new Mock<IProductRepository>();
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            var stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
-
-            stringLocalizerMock.Setup(p => p["PriceNotGreaterThanZero"]).Returns(new LocalizedString("PriceNotGreaterThanZero", "PriceNotGreaterThanZero"));
-            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
+             product.Price = "-1"; //setting Price to -1
+             stringLocalizerMock.Setup(p => p["PriceNotGreaterThanZero"]).Returns(new LocalizedString("PriceNotGreaterThanZero", "PriceNotGreaterThanZero"));
+             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
 
             //Act
@@ -112,15 +104,8 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         public void ValidateQuantity()
         {
             //Arrange
-            ProductViewModel product = new ProductViewModel();
-
-            var cartMock = new Mock<ICart>();
-            var productRepositoryMock = new Mock<IProductRepository>();
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            var stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
-
-            stringLocalizerMock.Setup(p => p["MissingQuantity"]).Returns(new LocalizedString("MissingQuantity", "MissingQuantity"));
-            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
+             stringLocalizerMock.Setup(p => p["MissingQuantity"]).Returns(new LocalizedString("MissingQuantity", "MissingQuantity"));
+             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
 
             //Act
@@ -136,15 +121,8 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         public void ValidateStockType()
         {
             //Arrange
-            ProductViewModel product = new ProductViewModel();
-            
-            var cartMock = new Mock<ICart>();
-            var productRepositoryMock = new Mock<IProductRepository>();
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            var stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
-
-            stringLocalizerMock.Setup(p => p["StockNotAnInteger"]).Returns(new LocalizedString("StockNotAnInteger", "StockNotAnInteger"));
-            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
+             stringLocalizerMock.Setup(p => p["StockNotAnInteger"]).Returns(new LocalizedString("StockNotAnInteger", "StockNotAnInteger"));
+             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
 
             //Act
@@ -160,16 +138,9 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         public void ValidateStockNotGreaterThanZero()
         {
             //Arrange
-            ProductViewModel product = new ProductViewModel();
-            product.Stock = "-1";
-            
-            var cartMock = new Mock<ICart>();
-            var productRepositoryMock = new Mock<IProductRepository>();
-            var orderRepositoryMock = new Mock<IOrderRepository>();
-            var stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
-
-            stringLocalizerMock.Setup(p => p["StockNotGreaterThanZero"]).Returns(new LocalizedString("StockNotGreaterThanZero", "StockNotGreaterThanZero"));
-            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
+             product.Stock = "-1";
+             stringLocalizerMock.Setup(p => p["StockNotGreaterThanZero"]).Returns(new LocalizedString("StockNotGreaterThanZero", "StockNotGreaterThanZero"));
+             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
 
             //Act
