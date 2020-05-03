@@ -44,7 +44,7 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
             // TODO validation controls 
             // Implement a method inside the ProductService class that will return an error message for each 
             // product property that is not conform to its business rules. The return type of the method  
-            // must be of List<string>. 
+            // must be of List<string>. //Done, this was the unit test
              
             modelErrors = _productService.CheckProductModelErrors(product); //this holds results of CheckProductModelErrors
 

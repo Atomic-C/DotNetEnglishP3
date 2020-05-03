@@ -25,14 +25,14 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             _orderRepository = orderRepository;
             _localizer = localizer;
         }
-        public List<ProductViewModel> GetAllProductsViewModel()
+        public List<ProductViewModel> GetAllProductsViewModel() //to test?
         {
              
             IEnumerable<Product> productEntities = GetAllProducts();
             return MapToViewModel(productEntities);
         }
 
-        private static List<ProductViewModel> MapToViewModel(IEnumerable<Product> productEntities)
+        private static List<ProductViewModel> MapToViewModel(IEnumerable<Product> productEntities) //unit test if i wanted to
         {
             List <ProductViewModel> products = new List<ProductViewModel>();
             foreach (Product product in productEntities)
@@ -51,37 +51,37 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return products;
         }
 
-        public List<Product> GetAllProducts()
+        public List<Product> GetAllProducts() //tested
         {
             IEnumerable<Product> productEntities = _productRepository.GetAllProducts();
             return productEntities?.ToList();
         }
 
-        public ProductViewModel GetProductByIdViewModel(int id)
+        public ProductViewModel GetProductByIdViewModel(int id) //to test
         {
             List<ProductViewModel> products = GetAllProductsViewModel().ToList();
             return products.Find(p => p.Id == id);
         }
 
 
-        public Product GetProductById(int id)
+        public Product GetProductById(int id) //to test
         {
             List<Product> products = GetAllProducts().ToList();
             return products.Find(p => p.Id == id);
         }
 
-        public async Task<Product> GetProduct(int id)
+        public async Task<Product> GetProduct(int id) //to test
         {
             var product = await _productRepository.GetProduct(id);
             return product;
         }
 
-        public async Task<IList<Product>> GetProduct()
+        public async Task<IList<Product>> GetProduct() //to test
         {
             var products = await _productRepository.GetProduct();
             return products;
         }
-        public void UpdateProductQuantities()
+        public void UpdateProductQuantities() //to test
         {
             Cart cart = (Cart) _cart;
             foreach (CartLine line in cart.Lines)
@@ -132,13 +132,13 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return modelErrors;
         }
 
-        public void SaveProduct(ProductViewModel product)
+        public void SaveProduct(ProductViewModel product) //to test
         {
             var productToAdd = MapToProductEntity(product);
             _productRepository.SaveProduct(productToAdd);
         }
 
-        private static Product MapToProductEntity(ProductViewModel product)
+        private static Product MapToProductEntity(ProductViewModel product)  //unit test if i wanted to
         {
             Product productEntity = new Product
             {
@@ -151,7 +151,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return productEntity;
         }
 
-        public void DeleteProduct(int id)
+        public void DeleteProduct(int id) //to test
         {
             // TODO what happens if a product has been added to a cart and has been later removed from the inventory ?
             // delete the product form the cart by using the specific method

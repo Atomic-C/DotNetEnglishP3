@@ -17,7 +17,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
         private Mock<IStringLocalizer<ProductService>> stringLocalizerMock;
         private ProductViewModel product;
 
-        public ProductServiceTests()
+        public ProductServiceTests() //A constructor is always named after the class
         {
             // Arrange
             product = new ProductViewModel();
