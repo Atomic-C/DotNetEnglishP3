@@ -42,16 +42,47 @@ namespace P3AddNewFunctionalityDotNetCore.IntegrationTests
         public void GetProductByIdViewModel() // This test is to see if the view model contains the correct information
         {
             //Act
-            var expectedProductId = productService.GetProductByIdViewModel(18).Id;
-            var expectedProductName = productService.GetProductByIdViewModel(18).Name;
-            var expectedPrice = productService.GetProductByIdViewModel(18).Price;
+            var expectedProduct = productService.GetProductByIdViewModel(18);
+            //var expectedProductName = productService.GetProductByIdViewModel(18).Name;
+            //var expectedPrice = productService.GetProductByIdViewModel(18).Price;
 
             //Assert
-            Assert.Equal(18, expectedProductId);
-            Assert.Equal("Something", expectedProductName);
-            Assert.Equal("1", expectedPrice);        
+            Assert.Equal(18, expectedProduct.Id);
+            Assert.Equal("Something", expectedProduct.Name);
+            Assert.Equal("1", expectedProduct.Price); //hAVING MULT
 
         }
+        [Fact]
+        public void GetProductById()
+        {
+            //Act
+            var expectedProduct = productService.GetProductById(18);
+            //Assert
+            //Assert.Equal("Something", expectedProduct.Name);
+            Assert.NotNull(expectedProduct); //Assert null to see if a product is returned at all. if it exists.
+
+        }
+
+        [Fact]
+        public void GetProduct()
+        {
+            //Act
+            var expectedProduct = productService.GetProduct(18);
+            //Assert
+            Assert.NotNull(expectedProduct);
+        }
+
+        [Fact]
+        public void GetProducts()
+            {
+            //Act
+            var expectedProducts = productService.GetProducts();
+            //Assert
+            Assert.NotEmpty(expectedProducts.Result); //C# ASYNCRHONOUS WHAT IS, WHY USE IT
+            }
+
+
+
     }
     
 }

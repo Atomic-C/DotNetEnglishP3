@@ -57,31 +57,31 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return productEntities?.ToList(); //This returns a list of products, saw it on debugger
         }
 
-        public ProductViewModel GetProductByIdViewModel(int id) //I was going to test this and John stated this method isn't being called anywhere.
+        public ProductViewModel GetProductByIdViewModel(int id) //tested as integration test
         {
             List<ProductViewModel> products = GetAllProductsViewModel().ToList();
             return products.Find(p => p.Id == id);
         }
 
 
-        public Product GetProductById(int id) //to test
+        public Product GetProductById(int id) //tested as integration test
         {
             List<Product> products = GetAllProducts().ToList();
             return products.Find(p => p.Id == id);
         }
 
-        public async Task<Product> GetProduct(int id) //to test
+        public async Task<Product> GetProduct(int id) //tested as integration test
         {
             var product = await _productRepository.GetProduct(id);
             return product;
         }
 
-        public async Task<IList<Product>> GetProduct() //to test
+        public async Task<IList<Product>> GetProducts() //tested as integration test
         {
-            var products = await _productRepository.GetProduct();
+            var products = await _productRepository.GetProducts();
             return products;
         }
-        public void UpdateProductQuantities() //to test
+        public void UpdateProductQuantities() //VOIDS NOT TO BE TESTED IN INTEGRATION TESTS
         {
             Cart cart = (Cart) _cart;
             foreach (CartLine line in cart.Lines)
@@ -132,7 +132,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return modelErrors;
         }
 
-        public void SaveProduct(ProductViewModel product) //to test
+        public void SaveProduct(ProductViewModel product) // ANOTHER VOID NOT TO BE TESTED
         {
             var productToAdd = MapToProductEntity(product);
             _productRepository.SaveProduct(productToAdd);
@@ -151,7 +151,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return productEntity;
         }
 
-        public void DeleteProduct(int id) //to test
+        public void DeleteProduct(int id) //ANOTHER VOID NOT TO BE TESTED
         {
             // TODO what happens if a product has been added to a cart and has been later removed from the inventory ?
             // delete the product form the cart by using the specific method
