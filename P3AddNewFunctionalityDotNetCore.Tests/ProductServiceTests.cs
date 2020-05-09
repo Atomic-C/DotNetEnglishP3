@@ -42,7 +42,7 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             stringLocalizerMock.Setup(l => l["MissingName"]).Returns(new LocalizedString("MissingName", "MissingName"));
 
             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
-            product.Name = "";
+            product.Name = ""; // Is this needed?
 
             // Act
             List<string> modelErrors = productService.CheckProductModelErrors(product);

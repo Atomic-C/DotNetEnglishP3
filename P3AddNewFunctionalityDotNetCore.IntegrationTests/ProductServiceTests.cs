@@ -19,8 +19,9 @@ namespace P3AddNewFunctionalityDotNetCore.IntegrationTests
         private readonly IOrderRepository orderRepository;
         private readonly IStringLocalizer<ProductService>localizer;
 
-        public ProductServiceTests()
+        public ProductServiceTests() //A constructor is always named after the class
         {
+            // Arrange
             var options = new DbContextOptionsBuilder<P3Referential>().UseSqlServer("Server=.\\SQLEXPRESS;Database=P3Referential-2f561d3b-493f-46fd-83c9-6e2643e7bd0a;Trusted_Connection=True;MultipleActiveResultSets=true").Options;
             var context = new P3Referential(options);
             productRepository = new ProductRepository(context);
@@ -32,10 +33,24 @@ namespace P3AddNewFunctionalityDotNetCore.IntegrationTests
         [Fact]
         public void GetAllProductsTest()
         {   //Act
-            var products = productService.GetAllProducts();
+            var productList = productService.GetAllProducts(); // This tests GetAllProducts() method from IProductService as we're testing methods from IproductService
 
             //Assert
-            Assert.NotEmpty(products);
+            Assert.NotEmpty(productList);
+        }
+        [Fact]
+        public void GetProductByIdViewModel() // This test is to see if the view model contains the correct information
+        {
+            //Act
+            var expectedProductId = productService.GetProductByIdViewModel(18).Id;
+            var expectedProductName = productService.GetProductByIdViewModel(18).Name;
+            var expectedPrice = productService.GetProductByIdViewModel(18).Price;
+
+            //Assert
+            Assert.Equal(18, expectedProductId);
+            Assert.Equal("Something", expectedProductName);
+            Assert.Equal("1", expectedPrice);        
+
         }
     }
     

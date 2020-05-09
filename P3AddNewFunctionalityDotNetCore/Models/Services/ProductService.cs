@@ -25,7 +25,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             _orderRepository = orderRepository;
             _localizer = localizer;
         }
-        public List<ProductViewModel> GetAllProductsViewModel() //to test?
+        public List<ProductViewModel> GetAllProductsViewModel() //to test as a unit test
         {
              
             IEnumerable<Product> productEntities = GetAllProducts();
@@ -51,13 +51,13 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
             return products;
         }
 
-        public List<Product> GetAllProducts() //tested
+        public List<Product> GetAllProducts() //tested as integration test
         {
             IEnumerable<Product> productEntities = _productRepository.GetAllProducts();
-            return productEntities?.ToList();
+            return productEntities?.ToList(); //This returns a list of products, saw it on debugger
         }
 
-        public ProductViewModel GetProductByIdViewModel(int id) //to test
+        public ProductViewModel GetProductByIdViewModel(int id) //I was going to test this and John stated this method isn't being called anywhere.
         {
             List<ProductViewModel> products = GetAllProductsViewModel().ToList();
             return products.Find(p => p.Id == id);
