@@ -11,7 +11,7 @@ using Xunit;
 
 namespace P3AddNewFunctionalityDotNetCore.IntegrationTests
 {
-    public class ProductServiceTests
+    public class ProductServiceTests : DBTestBaseController
     {
         private readonly IProductService productService;
         private readonly ICart cart;
@@ -22,9 +22,8 @@ namespace P3AddNewFunctionalityDotNetCore.IntegrationTests
         public ProductServiceTests() //A constructor is always named after the class
         {
             // Arrange
-            var options = new DbContextOptionsBuilder<P3Referential>().UseSqlServer("Server=.\\SQLEXPRESS;Database=P3Referential-2f561d3b-493f-46fd-83c9-6e2643e7bd0a;Trusted_Connection=True;MultipleActiveResultSets=true").Options;
-            var context = new P3Referential(options);
-            productRepository = new ProductRepository(context);
+            var p3Referential = new P3Referential(options);
+            productRepository = new ProductRepository(p3Referential);
             orderRepository = new OrderRepository(context);
 
             productService = new ProductService(cart, productRepository, orderRepository, localizer);

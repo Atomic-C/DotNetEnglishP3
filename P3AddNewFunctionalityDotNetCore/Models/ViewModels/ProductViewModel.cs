@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
@@ -19,5 +20,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.ViewModels
         //[Required]
         //[Range(0, double.MaxValue, ErrorMessage = "Please enter valid price")]
         public string Price { get; set; }
+
+
     }
 }

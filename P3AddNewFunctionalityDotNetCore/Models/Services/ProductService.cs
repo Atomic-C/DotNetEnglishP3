@@ -134,7 +134,7 @@ namespace P3AddNewFunctionalityDotNetCore.Models.Services
 
         public void SaveProduct(ProductViewModel product) // ANOTHER VOID NOT TO BE TESTED
         {
-            var productToAdd = MapToProductEntity(product);
+            var productToAdd = MapToProductEntity(product); // test MapToProductEntity and _productRepository.SaveProduct(productToAdd)
             _productRepository.SaveProduct(productToAdd);
         }
 
