@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Localization;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Moq;
 using P3AddNewFunctionalityDotNetCore.Controllers;
 using P3AddNewFunctionalityDotNetCore.Data;
@@ -35,28 +36,80 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
             productServiceMock = new Mock<IProductService>();
             languageServiceMock = new Mock<ILanguageService>();
-            productController = new ProductController(productServiceMock.Object, languageServiceMock.Object);
-           
+            //productController = new ProductController(productServiceMock.Object, languageServiceMock.Object);
+            
         }
 
         [Fact]
-        public void Create()//to mock
+        public void CreateValidModelState() // to mock
         {
+            // Act
+            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
-            product.Id = 1;
+            productController = new ProductController(productService, languageServiceMock.Object);
+
+            productServiceMock.Setup(x => x.SaveProduct(product));
+
+            //Arranje
+
+
+
+
+            product.Id = 99;
             product.Name = "Test box";
             product.Description = "The best box ever.";
             product.Details = "Toss it and see if it gets back.";
             product.Stock = "9000";
             product.Price = "9000";
+
             var saveProduct = productController.Create(product);
-            var expectedProduct = productServiceMock.GetProduct(1);
 
 
-            Assert.NotNull(expectedProduct);
+            //productServiceMock.Setup(x => x.GetProductById(It.IsAny<int>())).Returns(saveProduct);
+            //productServiceMock.SetupGet(x => x.GetProductById(99)).Returns("Test box");
 
+            //var expectedProduct = productServiceMock.GetProduct(1);
+
+            Assert.IsType<RedirectToActionResult>(saveProduct);
+            
+        }
+
+        [Fact]
+        public void CreateInvalidModelState() // to mock
+        {
+            // Act
+            stringLocalizerMock.Setup(l => l["MissingName"]).Returns(new LocalizedString("MissingName", "MissingName"));
+
+            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
+
+            productController = new ProductController(productService, languageServiceMock.Object);
+
+            productServiceMock.Setup(x => x.SaveProduct(product));
+
+            //Arranje
+
+
+
+
+            product.Id = 99;
+            //product.Name = "Test box";
+            product.Description = "The best box ever.";
+            product.Details = "Toss it and see if it gets back.";
+            product.Stock = "9000";
+            product.Price = "9000";
+
+            var saveProduct = productController.Create(product);
+
+
+            //productServiceMock.Setup(x => x.GetProductById(It.IsAny<int>())).Returns(saveProduct);
+            //productServiceMock.SetupGet(x => x.GetProductById(99)).Returns("Test box");
+
+            //var expectedProduct = productServiceMock.GetProduct(1);
+
+            Assert.IsType<ViewResult>(saveProduct);
 
         }
+
 
     }
 }

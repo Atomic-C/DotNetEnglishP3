@@ -24,7 +24,7 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult AddToCart(int id)
+        public RedirectToActionResult AddToCart(int id)//mock
         {
             Product product = _productService.GetProductById(id);
 
@@ -39,7 +39,7 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
             }
         }
 
-        public RedirectToActionResult RemoveFromCart(int id)
+        public RedirectToActionResult RemoveFromCart(int id)//movk
         {
             Product product = _productService.GetAllProducts()
                 .FirstOrDefault(p => p.Id == id);
