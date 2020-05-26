@@ -38,7 +38,7 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Create(ProductViewModel product)
+        public IActionResult Create(ProductViewModel product) //MOCKED
         {
             List<string> modelErrors = new List<string>();
             // TODO validation controls 
@@ -66,7 +66,7 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult DeleteProduct(int id)
+        public IActionResult DeleteProduct(int id)//MOCKED
         {
             _productService.DeleteProduct(id);
             return RedirectToAction("Admin");

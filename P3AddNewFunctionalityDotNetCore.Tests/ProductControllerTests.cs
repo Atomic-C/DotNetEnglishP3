@@ -16,14 +16,14 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 {
     public class ProductControllerTests
     {
+        private ProductViewModel product;
         private Mock<ICart> cartMock;
         private Mock<IProductRepository> productRepositoryMock;
         private Mock<IOrderRepository> orderRepositoryMock;
         private Mock<IProductService> productServiceMock;
         private Mock<ILanguageService> languageServiceMock;
         private Mock<IStringLocalizer<ProductService>> stringLocalizerMock;
-        private ProductViewModel product;
-
+        
         private ProductController productController;
 
         public ProductControllerTests()
@@ -33,27 +33,25 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
             cartMock = new Mock<ICart>();
             productRepositoryMock = new Mock<IProductRepository>();
             orderRepositoryMock = new Mock<IOrderRepository>();
-            stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
             productServiceMock = new Mock<IProductService>();
             languageServiceMock = new Mock<ILanguageService>();
+            stringLocalizerMock = new Mock<IStringLocalizer<ProductService>>();
             //productController = new ProductController(productServiceMock.Object, languageServiceMock.Object);
-            
+
         }
 
         [Fact]
-        public void CreateValidModelState() // to mock
+        public void CreateValidModelState() // MOCKED
         {
-            // Act
+            // Arrange
             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
             productController = new ProductController(productService, languageServiceMock.Object);
 
-            productServiceMock.Setup(x => x.SaveProduct(product));
+            productServiceMock.Setup(x => x.SaveProduct(product)); //It works without this?!? what's it FOR!?
 
-            //Arranje
-
-
-
+            //Act
+                       
 
             product.Id = 99;
             product.Name = "Test box";
@@ -70,29 +68,28 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             //var expectedProduct = productServiceMock.GetProduct(1);
 
+            //Assert
             Assert.IsType<RedirectToActionResult>(saveProduct);
             
         }
 
         [Fact]
-        public void CreateInvalidModelState() // to mock
+        public void CreateInvalidModelState() // MOCKED
         {
-            // Act
+            // Arranje
             stringLocalizerMock.Setup(l => l["MissingName"]).Returns(new LocalizedString("MissingName", "MissingName"));
 
             ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
 
             productController = new ProductController(productService, languageServiceMock.Object);
 
-            productServiceMock.Setup(x => x.SaveProduct(product));
+            productServiceMock.Setup(x => x.SaveProduct(product)); //It works without this?!? what's it FOR!?
 
-            //Arranje
-
-
+            //Act
 
 
             product.Id = 99;
-            //product.Name = "Test box";
+            //product.Name = "Test box"; //commenting this line should cause the error test to pass.
             product.Description = "The best box ever.";
             product.Details = "Toss it and see if it gets back.";
             product.Stock = "9000";
@@ -106,7 +103,45 @@ namespace P3AddNewFunctionalityDotNetCore.Tests
 
             //var expectedProduct = productServiceMock.GetProduct(1);
 
+            //Assert
             Assert.IsType<ViewResult>(saveProduct);
+
+        }
+
+        [Fact]
+        public void IsProductDeleted() // MOCKED?
+        {
+            // Arranje
+            //stringLocalizerMock.Setup(l => l["MissingName"]).Returns(new LocalizedString("MissingName", "MissingName"));
+
+            ProductService productService = new ProductService(cartMock.Object, productRepositoryMock.Object, orderRepositoryMock.Object, stringLocalizerMock.Object);
+
+            productController = new ProductController(productService, languageServiceMock.Object);
+
+            productServiceMock.Setup(x => x.SaveProduct(product)); //ask John what this does exactly, it also passes with this comented?!?!?
+
+            //Act
+
+
+
+
+            product.Id = 99;
+            product.Name = "Test box"; 
+            product.Description = "The best box ever.";
+            product.Details = "Toss it and see if it gets back.";
+            product.Stock = "9000";
+            product.Price = "9000";
+
+            //var saveProduct = productController.Create(product);
+            var deleteProduct = productController.DeleteProduct(99);
+
+            //productServiceMock.Setup(x => x.GetProductById(It.IsAny<int>())).Returns(saveProduct);
+            //productServiceMock.SetupGet(x => x.GetProductById(99)).Returns("Test box");
+
+            //var expectedProduct = productServiceMock.GetProduct(1);
+
+            //Assert
+            Assert.IsType<RedirectToActionResult>(deleteProduct);
 
         }
 

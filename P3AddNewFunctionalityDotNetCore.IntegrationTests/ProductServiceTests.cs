@@ -68,7 +68,7 @@ namespace P3AddNewFunctionalityDotNetCore.IntegrationTests
             //Act
             var expectedProduct = productService.GetProduct(18);
             //Assert
-            Assert.NotNull(expectedProduct);
+            Assert.NotNull(expectedProduct); // I cannot see what values are filled for expectedProduct to not be null!
         }
 
         [Fact]

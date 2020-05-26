@@ -39,7 +39,7 @@ namespace P3AddNewFunctionalityDotNetCore.Controllers
             }
         }
 
-        public RedirectToActionResult RemoveFromCart(int id)//movk
+        public RedirectToActionResult RemoveFromCart(int id)//mock
         {
             Product product = _productService.GetAllProducts()
                 .FirstOrDefault(p => p.Id == id);
